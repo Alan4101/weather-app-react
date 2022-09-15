@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import { FC, useEffect, useState } from 'react';
 import './App.css';
+import { useAppDispatch, useAppSelector } from './services/hooks';
+import { getGeolocation } from './services/utils/utils';
+import { getCurrentWeather } from './store/reducers/weatherReducer';
+type GeolacationType = {
+  lat: number,
+  lon: number
+}
+export const App:FC =() => {
+  const [pos, setPos] = useState<GeolacationType | string>("");
 
-function App() {
+  const dispatch = useAppDispatch();
+  const {error, loading, weatherData} = useAppSelector((state)=> state.weathers)
+  
+  useEffect(()=>{
+    
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition((position) => {
+        dispatch(getCurrentWeather({lat: position.coords.latitude, lon: position.coords.longitude}))
+      })
+    }
+  },[])
+
+  console.log(weatherData)
+  
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>home</p>
       </header>
     </div>
   );
 }
 
-export default App;
