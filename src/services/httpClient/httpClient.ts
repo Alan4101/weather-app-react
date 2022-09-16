@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 import { IhttpClent, IhttpRequestParameters } from './IhttpClient';
 
-axios.defaults.baseURL = process.env.APP_BASE_URL;
+axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
 
 class HttpClient implements IhttpClent {
     get<T, U>(parameters : IhttpRequestParameters<T>):Promise<U>{

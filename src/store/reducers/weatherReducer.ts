@@ -1,28 +1,25 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import { http } from '../../services/httpClient/httpClient';
+import { IWeatherData } from './type';
 
-const appId = process.env.APP_WEATHER_KEY;
+const appId = process.env.REACT_APP_WEATHER_KEY
 
-interface IWeather{
-     
-}
+
 
 interface WeatherState  {
-    weatherData: IWeather;
+    weatherData: IWeatherData | null;
     loading: boolean;
     error: boolean | string;
-    
 }
 const initialState: WeatherState = {
-    weatherData: {},
+    weatherData: null,
     error: false,
     loading: false,
 
 }
 type UnitsType = 'standart' | 'metric' | 'imperial';
 
-
-interface GetResponceCurrentWeather extends IWeather {
+interface GetResponceCurrentWeather extends IWeatherData {
 
 }
 interface GetRequestCurrentWeather {
@@ -36,12 +33,14 @@ interface GetRequestCurrentWeather {
 
 export const getCurrentWeather = createAsyncThunk('weather/getCurrentWeather', async (options: GetRequestCurrentWeather, { rejectWithValue }) => {
     try {
+        console.log(appId)
         return await http.get<GetRequestCurrentWeather, GetResponceCurrentWeather >({
-            url: 'https://api.openweathermap.org/data/2.5/weather/?',
+            url: 'weather/?',
             param: {
                 lat: options.lat,
                 lon: options.lon,
-                appid: '4e59f701f39103bf17d031ad20a884ce',
+                appid: appId,
+                units: 'metric',
             }
         });
 
