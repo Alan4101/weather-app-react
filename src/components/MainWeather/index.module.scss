@@ -1,7 +1,36 @@
-.mainContainer{
-  
-}
-.wrapper{
-  display: grid;
-  grid-template: 1fr/ repeat(2, 1fr);
+.content{
+  margin-top: 2em;
+  font-family: 'Source Sans Pro';
+  .cityTitle{
+    padding: .5em 0;
+
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    line-height: 41px;
+    font-size: 34px;
+  }
+  .temperatureText{
+    padding: .2em 0;
+    line-height: 70px;
+    font-weight: 300;
+    font-size: 96px;
+    margin: 0px;
+  }
+  .text{
+    font-size: 25px;
+    color:rgba(235, 235, 245, 0.6);
+  }
+  .box{
+    span{
+      font-size: 25px;
+      padding: 5px;
+    }
+  }
+  .icon{
+    svg{
+      width: 100%;
+    }
+    padding: .5em 0;
+  }
+
 }

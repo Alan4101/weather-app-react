@@ -1,2 +1,2 @@
 export * from './MainWeather/index';
-export * from './WeatherWeacklyList/index';
+export * from './WeatheList/index';

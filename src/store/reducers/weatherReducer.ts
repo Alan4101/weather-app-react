@@ -4,8 +4,6 @@ import { IWeatherData } from './type';
 
 const appId = process.env.REACT_APP_WEATHER_KEY
 
-
-
 interface WeatherState  {
     weatherData: IWeatherData | null;
     loading: boolean;
@@ -33,7 +31,6 @@ interface GetRequestCurrentWeather {
 
 export const getCurrentWeather = createAsyncThunk('weather/getCurrentWeather', async (options: GetRequestCurrentWeather, { rejectWithValue }) => {
     try {
-        console.log(appId)
         return await http.get<GetRequestCurrentWeather, GetResponceCurrentWeather >({
             url: 'weather/?',
             param: {

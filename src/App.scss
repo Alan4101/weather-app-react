@@ -1,15 +1,29 @@
-@use '/src/styles/colors';
+@use 'colors';
 
 .App {
   text-align: center;
   width: 100%;
-  display: grid;
   justify-content: center;
+  background-color:  #312B5B;
+  min-height: 100%;
+  color: #fff;
+  margin-bottom: 2em;
+
   .mainWrapper{
+    margin: 0 auto;
     padding: 0 15px 0 15px ;
-    display: grid;
     max-width: 1200px;
-    border: 1px solid;
+    min-height: 100%;
+    display: grid;
+    grid-template: 1fr/ 1fr;
+    .weather__container{
+      // border: 1px solid;
+    
+    }
+    .daily__container{
+      // border: 1px solid;
+
+    }
   }
 }
 
