@@ -19,21 +19,25 @@ type Wind = {
   deg: number,
   gust: number
 }
-export interface IWeatherData{
-  coord: {
-    lon: number,
-    lat: number
-  };
-  weather:Array<IWeather>;  
-  base: string;
+interface Cord{
+  lon: number,
+  lat: number
+}
+interface Weather {
+  dt: number;
   main: MainOptions;
-  visibility: number;
   wind: Wind;
   rain: any;
   clouds: {
     all: number
   };
-  dt: number
+  pop: number;
+  visibility: number;
+  weather:Array<IWeather>;    
+}
+export interface IWeatherData extends Weather{
+  coord: Cord;
+  base: string;
   sys: {
     type: number,
     id: number,
@@ -45,4 +49,23 @@ export interface IWeatherData{
   id: number;
   name: string;
   cod: number;
+}
+
+interface ICity{
+  id: number;
+  name: string;
+  coord: Cord;
+  country:string;
+  population: number;
+  timezone: number;
+  sunrise: number;
+  sunset: number;
+}
+
+export interface IForecastList {
+  city: ICity;
+  cod: string;
+  message: number;
+  cnt: number;
+  list: Weather[];
 }

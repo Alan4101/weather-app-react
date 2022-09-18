@@ -6,8 +6,8 @@ import classes from "./index.module.scss"
 
 export const MainWeather: FC = () => {
   const dispatch = useAppDispatch()
-  const { error, loading, weatherData } = useAppSelector(
-    state => state.weathers,
+  const { error, loading, data: weatherData} = useAppSelector(
+    state => state.weathers.weatherData,
   )
 
   useEffect(() => {
@@ -21,6 +21,7 @@ export const MainWeather: FC = () => {
         )
       })
     }
+    // eslint-disable-next-line
   }, [])
 
   if(!loading){
