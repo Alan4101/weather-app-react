@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "dotenv": "^16.0.2",
-    "prettier": "2.7.1"
+    "prettier": "2.7.1",
+    "workbox-build": "^6.5.4"
   }
 }

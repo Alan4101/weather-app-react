@@ -5,7 +5,7 @@ import {App} from './App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from 'react-redux';
 import {store }from './store/index';
-import * as serviceWorker from './registerServiceWorker';
+import * as serviceWorker from './serviceWorker';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -24,4 +24,4 @@ root.render(
 reportWebVitals();
 
 // serviceWorker.unregister();
-serviceWorker.default();
+serviceWorker.register();

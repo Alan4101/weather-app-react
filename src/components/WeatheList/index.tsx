@@ -57,18 +57,23 @@ export const WeatherList: FC = () => {
       degre: 13,
     },
   ]
-
+const getIcon = (text:string)=>{
+  const icon = weatherIconList.filter(i=> text.includes(i.name))
+   
+  return icon[0].icon
+}
+console.log(getIcon('clouds'))
   return (
     <section className={classes.container}>
       <div className={classes.wrapper}>
         <div className={classes.wtWrapper}>
-          {mock.map((i, index) => (
-            <div key={index} className={classes.wtItem}>
-              <p className={classes.title}>{i.title}</p>
-              <p className={classes.icon}>{i.icon}</p>
-              <p className={classes.degre}>{i.degre}&deg;C</p>
+          {forecast && Object.entries(forecast).map((item, index) => item[1].map( i=> (
+            <div key={i.dt} className={classes.wtItem}>
+              <p className={classes.title}>{item[0]}</p>
+              {/* <p className={classes.icon}>{ getIcon(i.weather[0].main)}</p> */}
+              <p className={classes.degre}>{Math.floor(i.main.temp)}&deg;C</p>
             </div>
-          ))}
+          )))}
         </div>
       </div>
     </section>

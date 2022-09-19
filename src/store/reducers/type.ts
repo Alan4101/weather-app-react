@@ -28,12 +28,14 @@ interface Weather {
   main: MainOptions;
   wind: Wind;
   rain: any;
+  dt_txt: Date;
   clouds: {
     all: number
   };
   pop: number;
   visibility: number;
-  weather:Array<IWeather>;    
+  weather:Array<IWeather>;  
+  indexCount: number;  
 }
 export interface IWeatherData extends Weather{
   coord: Cord;
@@ -68,4 +70,8 @@ export interface IForecastList {
   message: number;
   cnt: number;
   list: Weather[];
+}
+
+export type ForecastData ={
+  [k: string]: Weather[];
 }

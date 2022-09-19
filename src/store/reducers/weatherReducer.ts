@@ -1,12 +1,15 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
+import { createForecastList } from "../../services/helpers/weather.helper";
 import { http } from "../../services/httpClient/httpClient"
-import { IForecastList, IWeatherData } from "./type"
+import { ForecastData, IForecastList, IWeatherData } from "./type"
 
 const appId = process.env.REACT_APP_WEATHER_KEY
 
 interface WeatherState {
   forecast: {
-    data: IForecastList | null,
+    data: ForecastData | null,
+    // data: any ,
+
     loading: boolean;
     error: boolean;
   },
@@ -81,6 +84,8 @@ export const getForecastList = createAsyncThunk(
   },
 )
 
+
+
 const weatherReducer = createSlice({
   name: "weather",
   initialState,
@@ -111,7 +116,7 @@ const weatherReducer = createSlice({
     reducersBulder.addCase(getForecastList.fulfilled, (state, { payload }) => {
       state.forecast.loading = false
       state.forecast.error = false
-      state.forecast.data = payload
+      state.forecast.data = createForecastList(payload) 
     })
   },
 })
