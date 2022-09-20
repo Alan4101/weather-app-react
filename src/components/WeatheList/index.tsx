@@ -1,10 +1,10 @@
-import { FC, useEffect } from "react"
-import {
-  getNormalTime,
-  weatherIconList,
-} from "../../services/helpers/weather.helper"
+import { FC, useEffect, useState } from "react"
+
 import { useAppDispatch, useAppSelector } from "../../services/hooks"
+import { Weather } from "../../store/reducers/type"
 import { getForecastList } from "../../store/reducers/weatherReducer"
+import { ForecastItem } from "../ForecastItem"
+
 import classes from "./index.module.scss"
 
 export const WeatherList: FC = () => {
@@ -14,6 +14,7 @@ export const WeatherList: FC = () => {
     data: forecast,
   } = useAppSelector(state => state.weathers.forecast)
   const dispatch = useAppDispatch()
+  const [forecastDayList, setForecastDayList] = useState<Weather[] | []>([])
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(position => {
@@ -28,14 +29,15 @@ export const WeatherList: FC = () => {
     // eslint-disable-next-line
   }, [])
 
+  const handleOpenTab = (key: string) => {
+      if (forecast) {
+        console.log([...forecast[key]])
+        setForecastDayList([...forecast[key]])
+      }
+    }
+  
   if (error) {
     return <>Smth wetn wrong ...</>
-  }
-  const getIcon = (text: string) => {
-    const icon = weatherIconList.filter(i =>
-      text.toLowerCase().includes(i.name),
-    )
-    return <span>{icon[0].icon}</span>
   }
   // console.log(forecast)
   return (
@@ -47,27 +49,25 @@ export const WeatherList: FC = () => {
           ) : (
             forecast &&
             Object.entries(forecast).map(item => (
-              <div key={item[0]} className={classes.wtItem}>
+              <div 
+                key={item[0]}
+                className={classes.wtItem}
+                onClick={() => handleOpenTab(item[0])}
+              >
                 <p className={classes.title}>{item[0]}</p>
-                <div className={classes.itemContainer}>
-                  {item[1].map(w => (
-                    <div key={w.dt} className={classes.weatherBox}>
-                      <p>{getNormalTime(w.dt_txt)}</p>
-                      <p className={classes.icon}>
-                        {getIcon(w.weather[0].main)}
-                      </p>
-                      <p className={classes.degre}>
-                        {Math.floor(w.main.temp)}&deg;C
-                      </p>
-                      <p>{w.weather[0].description}</p>
-                      <p>Feels like: {Math.floor(w.main.feels_like)}&deg;C</p>
-                    </div>
-                  ))}
-                </div>
+                
               </div>
             ))
           )}
+          
         </div>
+        <div className={classes.itemContainer}>
+                  {forecastDayList.length > 0
+                    ? forecastDayList.map(w => (
+                        <ForecastItem key={w.dt} weather={w} />
+                      ))
+                    : null}
+                </div>
       </div>
     </section>
   )
