@@ -23,7 +23,7 @@ interface Cord{
   lon: number,
   lat: number
 }
-interface Weather {
+export interface Weather {
   dt: number;
   main: MainOptions;
   wind: Wind;

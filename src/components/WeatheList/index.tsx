@@ -1,14 +1,21 @@
-import { FC , useEffect} from "react"
-import { weatherIconList } from "../../services/helpers/weather.helper"
+import { FC, useEffect } from "react"
+import {
+  getNormalTime,
+  weatherIconList,
+} from "../../services/helpers/weather.helper"
 import { useAppDispatch, useAppSelector } from "../../services/hooks"
 import { getForecastList } from "../../store/reducers/weatherReducer"
 import classes from "./index.module.scss"
 
 export const WeatherList: FC = () => {
-  const { loading, error, data: forecast } = useAppSelector((state=> state.weathers.forecast))
-  const dispatch = useAppDispatch();
+  const {
+    loading,
+    error,
+    data: forecast,
+  } = useAppSelector(state => state.weathers.forecast)
+  const dispatch = useAppDispatch()
 
-  useEffect(()=>{
+  useEffect(() => {
     navigator.geolocation.getCurrentPosition(position => {
       dispatch(
         getForecastList({
@@ -17,63 +24,49 @@ export const WeatherList: FC = () => {
         }),
       )
     })
+
     // eslint-disable-next-line
-  },[])
-  console.log(forecast)
-  const mock = [
-    {
-      title: "Monday",
-      icon: weatherIconList[1].icon,
-      degre: 15,
-    },
-    {
-      title: "Thurdsday",
-      icon: weatherIconList[0].icon,
-      degre: 11,
-    },
-    {
-      title: "Monday",
-      icon: weatherIconList[1].icon,
-      degre: 18,
-    },
-    {
-      title: "Monday",
-      icon: weatherIconList[1].icon,
-      degre: 20,
-    },
-    {
-      title: "Friday",
-      icon: weatherIconList[2].icon,
-      degre: 17,
-    },
-    {
-      title: "Suturday",
-      icon: weatherIconList[3].icon,
-      degre: 15,
-    },
-    {
-      title: "Sanday",
-      icon: weatherIconList[0].icon,
-      degre: 13,
-    },
-  ]
-const getIcon = (text:string)=>{
-  const icon = weatherIconList.filter(i=> text.includes(i.name))
-   
-  return icon[0].icon
-}
-console.log(getIcon('clouds'))
+  }, [])
+
+  if (error) {
+    return <>Smth wetn wrong ...</>
+  }
+  const getIcon = (text: string) => {
+    const icon = weatherIconList.filter(i =>
+      text.toLowerCase().includes(i.name),
+    )
+    return <span>{icon[0].icon}</span>
+  }
+  // console.log(forecast)
   return (
     <section className={classes.container}>
       <div className={classes.wrapper}>
         <div className={classes.wtWrapper}>
-          {forecast && Object.entries(forecast).map((item, index) => item[1].map( i=> (
-            <div key={i.dt} className={classes.wtItem}>
-              <p className={classes.title}>{item[0]}</p>
-              {/* <p className={classes.icon}>{ getIcon(i.weather[0].main)}</p> */}
-              <p className={classes.degre}>{Math.floor(i.main.temp)}&deg;C</p>
-            </div>
-          )))}
+          {loading ? (
+            <>loading...</>
+          ) : (
+            forecast &&
+            Object.entries(forecast).map(item => (
+              <div key={item[0]} className={classes.wtItem}>
+                <p className={classes.title}>{item[0]}</p>
+                <div className={classes.itemContainer}>
+                  {item[1].map(w => (
+                    <div key={w.dt} className={classes.weatherBox}>
+                      <p>{getNormalTime(w.dt_txt)}</p>
+                      <p className={classes.icon}>
+                        {getIcon(w.weather[0].main)}
+                      </p>
+                      <p className={classes.degre}>
+                        {Math.floor(w.main.temp)}&deg;C
+                      </p>
+                      <p>{w.weather[0].description}</p>
+                      <p>Feels like: {Math.floor(w.main.feels_like)}&deg;C</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
     </section>

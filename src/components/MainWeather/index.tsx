@@ -13,12 +13,12 @@ export const MainWeather: FC = () => {
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
-        // dispatch(
-        //   getCurrentWeather({
-        //     lat: position.coords.latitude,
-        //     lon: position.coords.longitude,
-        //   }),
-        // )
+        dispatch(
+          getCurrentWeather({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+          }),
+        )
       })
     }
     // eslint-disable-next-line
