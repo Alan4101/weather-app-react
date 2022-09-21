@@ -3,3 +3,7 @@ export * from './Sunny';
 export * from './Clear';
 export * from './Sunny';
 export * from './Rain';
+export * from './RainThunder';
+export * from './NigthClear';
+export * from './NigthRain';
+export * from './NigthCloudy';

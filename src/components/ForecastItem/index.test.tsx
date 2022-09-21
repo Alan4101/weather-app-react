@@ -1,8 +1,7 @@
 import { render , screen} from "@testing-library/react"
 import { ForecastItem } from "."
 import { Weather } from "../../store/reducers/type"
-import { getIcon } from "./index.helper"
-import { WeatherIconList } from './../../services/helpers/weather.helper';
+import { getIcon, WeatherIconList } from './../../services/helpers/weather.helper';
 
 describe("testing function", () => {
   const props:Weather = {

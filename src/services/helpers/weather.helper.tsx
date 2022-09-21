@@ -1,5 +1,5 @@
 import { ReactElement, ReactNode } from "react"
-import { Clear, Sunny, Cloudy, Rain } from "../../assets/icon/index"
+import { Clear, Sunny, Cloudy, Rain, NiogthClear, NigthCloudy, NigthRain, RainAndTunder } from "../../assets/icon/index"
 import { ForecastData, IForecastList} from "../../store/reducers/type"
 
 export interface WeatherIconList {
@@ -24,9 +24,31 @@ export const weatherIconList: WeatherIconList[] = [
     icon: <Clear />,
   },
   {
+    name: 'heavy rain',
+    icon: <RainAndTunder/>
+  },
+  {
     name: 'default',
     icon: <Cloudy />
-  }
+  },
+]
+export const weatherIconListNigth: WeatherIconList[] = [
+  {
+    name: "rain",
+    icon: <NigthRain />,
+  },
+  {
+    name: "clouds",
+    icon: <NigthCloudy />,
+  },
+  {
+    name: "clear",
+    icon: <NiogthClear />,
+  },
+  {
+    name: 'default',
+    icon: <Cloudy />
+  },
 ]
 
 export const days = [
@@ -65,3 +87,23 @@ export const getNormalTime = (date: Date) => {
         minute: "2-digit",
       })
 }
+
+// text - name kind for weather, time - time
+export const getIcon = (text: string, time?: Date): WeatherIconList => {
+  if (text.length === 0) {
+    return weatherIconList[weatherIconList.length - 1]
+  }
+  if (time) {
+    let t = new Date(time).getHours()
+    if (t >= 6 && t <= 22) {
+      return weatherIconList.filter(i => text.toLowerCase().includes(i.name))[0]
+    } else {
+      return weatherIconListNigth.filter(i =>
+        text.toLowerCase().includes(i.name),
+      )[0]
+    }
+  } else {
+    return weatherIconList.filter(i => text.toLowerCase().includes(i.name))[0]
+  }
+}
+
