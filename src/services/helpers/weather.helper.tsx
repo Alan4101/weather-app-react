@@ -56,10 +56,8 @@ export const createForecastList = (list: IForecastList) => {
   sortDays().forEach((item: string) => {
     forecast[item] = list.list.filter(i => getDayName(i.dt_txt) === item)
   })
-  Object.entries(forecast).filter(a =>
-    a[1].length === 0 ? delete forecast[a[0]] : a,
-  )
-  return forecast
+  Object.entries(forecast).filter(([k,v])=> v.length === 0 ? delete forecast[k] : k)
+  return  forecast
 }
 export const getNormalTime = (date: Date) => {
     return new Date(date).toLocaleTimeString([], {

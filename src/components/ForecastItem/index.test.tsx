@@ -21,7 +21,8 @@ describe("testing function", () => {
     weather: [{ id: 804, main: 'Clouds', description: 'overcast clouds', icon: '04n' }],
     wind: { speed: 2.76, deg: 191, gust: 5.41 },
     rain: undefined,
-    indexCount: 0
+    indexCount: 0,
+    activeItem: false
   }
   it("render correctly forecast item component", () => {
     render(<ForecastItem weather={props}/>)

@@ -43,6 +43,7 @@ export interface Weather {
     sunrise: number,
     sunset: number
   };
+  activeItem: boolean,
 }
 export interface IWeatherData extends Weather{
   coord: Cord;
