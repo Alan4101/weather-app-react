@@ -8,7 +8,6 @@ const appId = process.env.REACT_APP_WEATHER_KEY
 interface WeatherState {
   forecast: {
     data: ForecastData | null,
-    // data: IForecastList | null,
     loading: boolean;
     error: boolean;
   },
@@ -82,8 +81,6 @@ export const getForecastList = createAsyncThunk(
     }
   },
 )
-
-
 
 const weatherReducer = createSlice({
   name: "weather",

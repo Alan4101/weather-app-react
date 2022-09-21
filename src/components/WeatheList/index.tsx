@@ -17,57 +17,55 @@ export const WeatherList: FC = () => {
   const [forecastDayList, setForecastDayList] = useState<Weather[] | []>([])
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(position => {
-      dispatch(
-        getForecastList({
-          lat: position.coords.latitude,
-          lon: position.coords.longitude,
-        }),
-      )
-    })
-
+    if('geolocation' in navigator){
+      navigator.geolocation.getCurrentPosition(position => {
+        dispatch(
+          getForecastList({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
+          }),
+        )
+      })
+    }
+    
     // eslint-disable-next-line
   }, [])
 
   const handleOpenTab = (key: string) => {
-      if (forecast) {
-        console.log([...forecast[key]])
-        setForecastDayList([...forecast[key]])
-      }
+    if (forecast) {
+      setForecastDayList([...forecast[key]])
     }
-  
+  }
+
   if (error) {
     return <>Smth wetn wrong ...</>
   }
   // console.log(forecast)
   return (
     <section className={classes.container}>
-      <div className={classes.wrapper}>
+      <div className={classes.wrapper}> 
         <div className={classes.wtWrapper}>
           {loading ? (
-            <>loading...</>
+            <p data-testid='loading'>loading...</p>
           ) : (
             forecast &&
             Object.entries(forecast).map(item => (
-              <div 
+              <div
+                data-testid="location"
                 key={item[0]}
                 className={classes.wtItem}
                 onClick={() => handleOpenTab(item[0])}
               >
-                <p className={classes.title}>{item[0]}</p>
-                
+                <p  className={classes.title}>{item[0]}</p>
               </div>
             ))
           )}
-          
         </div>
         <div className={classes.itemContainer}>
-                  {forecastDayList.length > 0
-                    ? forecastDayList.map(w => (
-                        <ForecastItem key={w.dt} weather={w} />
-                      ))
-                    : null}
-                </div>
+          {forecastDayList.length > 0
+            ? forecastDayList.map(w => <ForecastItem key={w.dt} weather={w} />)
+            : null}
+        </div>
       </div>
     </section>
   )
