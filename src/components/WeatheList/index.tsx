@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from "../../services/hooks"
 import { Weather } from "../../store/reducers/type"
 import { getForecastList } from "../../store/reducers/weatherReducer"
 import { ForecastItem } from "../ForecastItem"
+import { Loader } from "../Loader"
 
 import classes from "./index.module.scss"
 
@@ -15,7 +16,7 @@ export const WeatherList: FC = () => {
   } = useAppSelector(state => state.weathers.forecast)
   const dispatch = useAppDispatch()
   const [forecastDayList, setForecastDayList] = useState<Weather[] | []>([])
-
+  
   useEffect(() => {
     if('geolocation' in navigator){
       navigator.geolocation.getCurrentPosition(position => {
@@ -36,7 +37,9 @@ export const WeatherList: FC = () => {
       setForecastDayList([...forecast[key]])
     }
   }
-
+  if(loading){
+    return <div><Loader/></div>
+  }
   if (error) {
     return <>Smth wetn wrong ...</>
   }
@@ -45,9 +48,7 @@ export const WeatherList: FC = () => {
     <section className={classes.container}>
       <div className={classes.wrapper}> 
         <div className={classes.wtWrapper}>
-          {loading ? (
-            <p data-testid='loading'>loading...</p>
-          ) : (
+          {
             forecast &&
             Object.entries(forecast).map(item => (
               <div
@@ -59,7 +60,7 @@ export const WeatherList: FC = () => {
                 <p  className={classes.title}>{item[0]}</p>
               </div>
             ))
-          )}
+          }
         </div>
         <div className={classes.itemContainer}>
           {forecastDayList.length > 0

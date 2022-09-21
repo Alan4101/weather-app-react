@@ -98,6 +98,8 @@ const weatherReducer = createSlice({
     reducersBulder.addCase(
       getCurrentWeather.fulfilled,
       (state, { payload }) => {
+        state.weatherData.loading = false
+        state.weatherData.error = false
         state.weatherData.data = payload
       },
     )

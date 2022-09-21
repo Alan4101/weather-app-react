@@ -2,6 +2,7 @@ import { FC, useEffect } from "react"
 import { weatherIconList } from "../../services/helpers/weather.helper"
 import { useAppDispatch, useAppSelector } from "../../services/hooks"
 import { getCurrentWeather } from "../../store/reducers/weatherReducer"
+import { Loader } from "../Loader"
 import classes from "./index.module.scss"
 
 export const MainWeather: FC = () => {
@@ -24,8 +25,8 @@ export const MainWeather: FC = () => {
     // eslint-disable-next-line
   }, [])
 
-  if(!loading){
-    return <h1>Loading ...</h1>
+  if(loading){
+    return <div><Loader/></div>
   }
   
   if (error || !weatherData) {
