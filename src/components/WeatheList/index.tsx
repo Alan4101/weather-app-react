@@ -61,14 +61,14 @@ export const WeatherList: FC = () => {
           {
             forecast &&
             Object.entries(forecast).map((item, index) => (
-              <div
+              <button
                 data-testid="location"
                 key={item[0]}
-                className={[classes.wtItem, isActiveItems[index] && classes.activeItem].join(' ')}
+                className={[classes.wtItem, isActiveItems[index] ? classes.activeItem: ''].join(' ')}
                 onClick={() => handleOpenTab(item[0], index)}
               >
                 <p  className={classes.title}>{item[0]}</p>
-              </div>
+              </button>
             ))
           }
         </div>
