@@ -34,7 +34,17 @@
         display: grid;
         align-items: center;
         outline: none;
-
+        &:before{
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          background-color: rgba(49, 43, 91, .9);
+          border-radius: 15px;
+          // filter: blur(2px);
+        }
         &:after {
           content: "";
           position: absolute;

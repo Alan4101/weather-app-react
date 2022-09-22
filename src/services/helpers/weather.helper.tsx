@@ -60,11 +60,12 @@ export const days = [
   "friday",
   "saturday",
 ]
-
+// get day name from date object
 const getDayName = (date: string) => {
     const d = new Date(date)
     return d.toLocaleDateString('en-EN', {weekday: 'long'}).toLowerCase()
 }
+// sorting an array of days relative to the current day
 export const sortDays = (currentDayArg?: number) => {
   const currentDay = currentDayArg ? currentDayArg: new Date().getDay();
     if( currentDay === 0 || currentDayArg === 0){
@@ -72,6 +73,7 @@ export const sortDays = (currentDayArg?: number) => {
     }
     return [...[...days].splice(currentDay), ...days.slice(0,currentDay)]
   }
+// transformated responce weather object to object like: { sunday: [{..weathers}] }
 export const createForecastList = (list: IForecastList) => {
   const forecast: ForecastData = {}
 
@@ -81,6 +83,7 @@ export const createForecastList = (list: IForecastList) => {
   Object.entries(forecast).filter(([k,v])=> v.length === 0 ? delete forecast[k] : k)
   return  forecast
 }
+// returned time in format 12:00
 export const getNormalTime = (date: string) => {
     return new Date(date).toLocaleTimeString([], {
         hour: "2-digit",
