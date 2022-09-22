@@ -62,6 +62,7 @@ export const WeatherList: FC = () => {
             forecast &&
             Object.entries(forecast).map((item, index) => (
               <button
+                role='list'
                 data-testid="location"
                 key={item[0]}
                 className={[classes.wtItem, isActiveItems[index] ? classes.activeItem: ''].join(' ')}
@@ -72,9 +73,9 @@ export const WeatherList: FC = () => {
             ))
           }
         </div>
-        <div className={classes.itemContainer}>
+        <div className={classes.itemContainer} data-testid="forecastDayList">
           {forecastDayList.length > 0
-            ? forecastDayList.map(w => <ForecastItem key={w.dt} weather={w} />)
+            ? forecastDayList.map(w => <ForecastItem key={w.dt} weather={w}/>)
             : null}
         </div>
       </div>

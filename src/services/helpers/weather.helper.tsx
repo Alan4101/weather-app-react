@@ -61,7 +61,7 @@ export const days = [
   "saturday",
 ]
 
-const getDayName = (date: Date) => {
+const getDayName = (date: string) => {
     const d = new Date(date)
     return d.toLocaleDateString('en-EN', {weekday: 'long'}).toLowerCase()
 }
@@ -81,7 +81,7 @@ export const createForecastList = (list: IForecastList) => {
   Object.entries(forecast).filter(([k,v])=> v.length === 0 ? delete forecast[k] : k)
   return  forecast
 }
-export const getNormalTime = (date: Date) => {
+export const getNormalTime = (date: string) => {
     return new Date(date).toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
@@ -89,7 +89,7 @@ export const getNormalTime = (date: Date) => {
 }
 
 // text - name kind for weather, time - time
-export const getIcon = (text: string, time?: Date): WeatherIconList => {
+export const getIcon = (text: string, time?: string): WeatherIconList => {
   if (text.length === 0) {
     return weatherIconList[weatherIconList.length - 1]
   }

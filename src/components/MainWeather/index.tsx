@@ -1,8 +1,10 @@
 import { FC, useEffect } from "react"
-import { getIcon, weatherIconList } from "../../services/helpers/weather.helper"
+import { getIcon } from "../../services/helpers/weather.helper"
 import { useAppDispatch, useAppSelector } from "../../services/hooks"
 import { getCurrentWeather } from "../../store/reducers/weatherReducer"
+
 import { Loader } from "../Loader"
+
 import classes from "./index.module.scss"
 
 export const MainWeather: FC = () => {
@@ -49,7 +51,7 @@ export const MainWeather: FC = () => {
         <span>Humidity: {weatherData.main.humidity}%&nbsp;</span>
         <span>Wind:{weatherData.wind.speed}m/s</span>
       </p>
-      <div className={classes.icon}>{getIcon(weatherData.weather[0].main, new Date()).icon}</div>
+      <div className={classes.icon}>{getIcon(weatherData.weather[0].main, new Date() as unknown as string).icon}</div>
     </div>
   )
 }

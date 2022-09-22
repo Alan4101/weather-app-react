@@ -16,8 +16,8 @@ type MainOptions = {
 }
 type Wind = {
   speed: number,
-  deg: number,
-  gust: number
+  deg?: number,
+  gust?: number
 }
 interface Cord{
   lon: number,
@@ -28,7 +28,7 @@ export interface Weather {
   main:MainOptions;
   wind: Wind;
   rain: any;
-  dt_txt: Date;
+  dt_txt: string;
   clouds: {
     all: number
   };
@@ -43,7 +43,6 @@ export interface Weather {
     sunrise: number,
     sunset: number
   };
-  activeItem: boolean,
 }
 export interface IWeatherData extends Weather{
   coord: Cord;

@@ -7,7 +7,7 @@ describe("testing function", () => {
   const props:Weather = {
     clouds: { all: 98 },
     dt: 1664150400,
-    dt_txt: new Date("2022-09-26 00:00:00"),
+    dt_txt: "2022-09-26 00:00:00",
     main: {
       temp: 10.66,
       feels_like: 9.95,
@@ -21,7 +21,6 @@ describe("testing function", () => {
     wind: { speed: 2.76, deg: 191, gust: 5.41 },
     rain: undefined,
     indexCount: 0,
-    activeItem: false
   }
   it("render correctly forecast item component", () => {
     render(<ForecastItem weather={props}/>)
