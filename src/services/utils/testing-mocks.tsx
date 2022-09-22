@@ -23,3 +23,21 @@ export const forecastMockData = {
     },
   ],
 }
+export const weatherMockData = {
+  clouds: { all: 98 },
+  dt: 1664150400,
+  dt_txt: "2022-09-26 00:00:00",
+  main: {
+    temp: 10.66,
+    feels_like: 9.95,
+    temp_min: 10.66,
+    temp_max: 10.66,
+    pressure: 1015,
+  },
+  pop: 0,
+  visibility: 10000,
+  weather: [{ id: 804, main: 'Clouds', description: 'overcast clouds', icon: '04n' }],
+  wind: { speed: 2.76, deg: 191, gust: 5.41 },
+  rain: undefined,
+  indexCount: 0,
+}

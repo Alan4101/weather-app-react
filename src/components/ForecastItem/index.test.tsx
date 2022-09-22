@@ -1,33 +1,17 @@
 import { render , screen} from "@testing-library/react"
 import { ForecastItem } from "."
+import { weatherMockData } from "../../services/utils/testing-mocks";
 import { Weather } from "../../store/reducers/type"
-import { getIcon, WeatherIconList } from './../../services/helpers/weather.helper';
+import { getIcon, weatherIconList, WeatherIconList, weatherIconListNigth } from './../../services/helpers/weather.helper';
 
 describe("testing function", () => {
-  const props:Weather = {
-    clouds: { all: 98 },
-    dt: 1664150400,
-    dt_txt: "2022-09-26 00:00:00",
-    main: {
-      temp: 10.66,
-      feels_like: 9.95,
-      temp_min: 10.66,
-      temp_max: 10.66,
-      pressure: 1015,
-    },
-    pop: 0,
-    visibility: 10000,
-    weather: [{ id: 804, main: 'Clouds', description: 'overcast clouds', icon: '04n' }],
-    wind: { speed: 2.76, deg: 191, gust: 5.41 },
-    rain: undefined,
-    indexCount: 0,
-  }
+  const props:Weather = weatherMockData;
   it("render correctly forecast item component", () => {
     render(<ForecastItem weather={props}/>)
     expect(screen.getByText(/overcast clouds/i)).toBeInTheDocument();
   })
 
-  it("check icon displayed", () => {
+  it("check all icon displayed", () => {
     const icon1: WeatherIconList = getIcon('Clouds')
     expect(icon1.name).toEqual('clouds')
     expect(icon1.name).not.toEqual('clear')
@@ -43,5 +27,13 @@ describe("testing function", () => {
 
     const icon5 = getIcon('')
     expect(icon5.name).toEqual('default')
+
+  })
+  it('checked display night and day icons', ()=> {
+    const iconNigth = getIcon('rain it',"2022-09-23 00:00:00")
+    expect(iconNigth.icon).toBe(weatherIconListNigth[0].icon)
+
+    const iconForDay = getIcon('rain it',"2022-09-23 11:00:00")
+    expect(iconForDay.icon).toBe(weatherIconList[0].icon)
   })
 })

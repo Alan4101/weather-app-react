@@ -31,7 +31,7 @@ export const WeatherList: FC = () => {
     }
     // eslint-disable-next-line
   }, [])
-
+console.log(forecast)
   useEffect(()=>{
     if(forecast){
       setForecastDayList(Object.values(forecast)[0])
