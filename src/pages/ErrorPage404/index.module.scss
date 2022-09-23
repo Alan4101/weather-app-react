@@ -1,0 +1,41 @@
+@import "../../styles/mixins";
+
+.errorWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  color: #fff;
+  p {
+    padding-top: 1em;
+  }
+  .errorText {
+    font-size: 3em;
+  }
+  .goBackBtn {
+    padding-top: 1em;
+    padding: 1em 3em;
+    border-radius: 15px;
+    margin-top: 1em;
+    color: #fff;
+    background-color: #110b18;
+    border: none;
+    position: relative;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border-radius: 15px;
+    display: grid;
+    align-items: center;
+    outline: none;
+    .title {
+      text-transform: capitalize;
+      padding: 0;
+      z-index: 9;
+    }
+    &:hover > .title {
+      color: #ccc !important;
+    }
+    @include button-hover(#6510c9);
+  }
+}

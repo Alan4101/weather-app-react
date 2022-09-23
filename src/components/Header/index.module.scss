@@ -1,0 +1,47 @@
+@import "../../styles//colors";
+.header {
+  width: 100%;
+  z-index: 99;
+  padding: 2em 0;
+  .navigation {
+    .navList {
+      list-style-type: none;
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+      gap: 3em;
+      .navItem {
+        .hoverLine {
+          display: block;
+          width: 0;
+          height: 2px;
+          background-color: transparent;
+        }
+        &:hover > .hoverLine {
+          background-color: rgb(213, 1, 255);
+          animation: showHoverUnderline 0.2s linear;
+          width: 100%;
+        }
+        .activeLink + .hoverLine {
+          width: 100%;
+          background-color: rgb(213, 1, 255);
+        }
+        & > a {
+          font-weight: 700;
+          text-transform: uppercase;
+          color: #fff;
+          font-size: 1.5em;
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+@keyframes showHoverUnderline {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}

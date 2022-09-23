@@ -1,17 +1,16 @@
-import { FC} from 'react';
-import './App.scss';
-import { Home } from './pages';
+import { FC } from "react"
+import "./App.scss"
+import { Layout } from "./components"
 
-export const App:FC = () => {
+export const App: FC = () => {
   return (
     <div className="App">
-      <video className='video-bg' autoPlay muted loop>
-          <source type='video/mp4' src='/cloudy.mp4'/>
-        </video>
-      <div className='mainWrapper'>
-        <Home/>
+      <video className="video-bg" autoPlay muted loop>
+        <source type="video/mp4" src="/cloudy.mp4" />
+      </video>
+      <div className="mainWrapper">
+        <Layout/>
       </div>
     </div>
-  );
+  )
 }
-
