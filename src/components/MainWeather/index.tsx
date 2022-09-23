@@ -1,31 +1,15 @@
-import { FC, useEffect } from "react"
+import { FC} from "react"
 import { getIcon } from "../../services/helpers/weather.helper"
-import { useAppDispatch, useAppSelector } from "../../services/hooks"
-import { getCurrentWeather } from "../../store/reducers/weatherReducer"
+import { useAppSelector } from "../../services/hooks"
 
 import { Loader } from "../Loader"
 
 import classes from "./index.module.scss"
 
 export const MainWeather: FC = () => {
-  const dispatch = useAppDispatch()
   const { error, loading, data: weatherData} = useAppSelector(
     state => state.weathers.weatherData,
   )
-
-  useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        dispatch(
-          getCurrentWeather({
-            lat: position.coords.latitude,
-            lon: position.coords.longitude,
-          }),
-        )
-      })
-    }
-    // eslint-disable-next-line
-  }, [])
 
   if(loading){
     return <div><Loader/></div>

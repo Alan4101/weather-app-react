@@ -26,7 +26,9 @@ export const WeatherList: FC = () => {
             lon: position.coords.longitude,
           })
         )
-        setIsActiveItems([true, ...isActiveItems])
+        const temp = [...isActiveItems]
+        temp.splice(0, 1, true);
+        setIsActiveItems(temp)
       })
     }
     // eslint-disable-next-line
