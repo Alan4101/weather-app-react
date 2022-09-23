@@ -1,42 +1,42 @@
-.content{
+.content {
   margin-top: 2em;
-  font-family: 'Source Sans Pro';
-  .cityTitle{
-    padding: .5em 0;
+  font-family: "Source Sans Pro";
+  .cityTitle {
+    padding: 0.5em 0;
 
     font-weight: 700;
     letter-spacing: 0.3px;
     line-height: 41px;
     font-size: 34px;
   }
-  .temperatureText{
-    padding: .2em 0;
+  .temperatureText {
+    padding: 0.2em 0;
     line-height: 70px;
     font-weight: 300;
     font-size: 96px;
     margin: 0px;
   }
- 
-  .textSmall,.text{
+
+  .textSmall,
+  .text {
     text-transform: capitalize;
     font-size: 25px;
-    color:rgba(235, 235, 245, 0.6);
+    color: rgba(235, 235, 245, 0.6);
   }
-  .textSmall{
+  .textSmall {
     font-size: 18px;
   }
-  .box{
-    span{
+  .box {
+    span {
       font-size: 25px;
       padding: 5px;
     }
   }
-  .icon{
-    svg{
+  .icon {
+    svg {
       width: 100%;
       height: 200px;
     }
-    padding: .5em 0;
+    padding: 0.5em 0;
   }
-
 }
