@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { createForecastList } from "../../services/helpers/weather.helper";
 import { http } from "../../services/httpClient/httpClient"
-import { ForecastData, IForecastList, IWeatherData } from "./type"
+import { ForecastData, IForecastList, IWeatherData, RequestWeather } from "./type"
 
 const appId = process.env.REACT_APP_WEATHER_KEY
 
@@ -29,20 +29,12 @@ const initialState: WeatherState = {
     error: false,
   },
 }
-type UnitsType = "standart" | "metric" | "imperial"
+
 
 interface GetResponceCurrentWeather extends IWeatherData {}
 
 interface ResponceForecast extends IForecastList {}
 
-interface RequestWeather {
-  lat: number
-  lon: number
-  appid?: string | undefined
-  exclude?: string
-  units?: UnitsType
-  lang?: string
-}
 
 export const getCurrentWeather = createAsyncThunk(
   "weather/getCurrentWeather",
@@ -86,16 +78,16 @@ const weatherReducer = createSlice({
   name: "weather",
   initialState,
   reducers: {},
-  extraReducers: reducersBulder => {
-    reducersBulder.addCase(getCurrentWeather.rejected, state => {
+  extraReducers: reducersBuilder => {
+    reducersBuilder.addCase(getCurrentWeather.rejected, state => {
       state.weatherData.loading = true
       state.weatherData.error = true
     })
-    reducersBulder.addCase(getCurrentWeather.pending, state => {
+    reducersBuilder.addCase(getCurrentWeather.pending, state => {
       state.weatherData.loading = true
       state.weatherData.error = false
     })
-    reducersBulder.addCase(
+    reducersBuilder.addCase(
       getCurrentWeather.fulfilled,
       (state, { payload }) => {
         state.weatherData.loading = false
@@ -103,15 +95,15 @@ const weatherReducer = createSlice({
         state.weatherData.data = payload
       },
     )
-    reducersBulder.addCase(getForecastList.pending, state => {
+    reducersBuilder.addCase(getForecastList.pending, state => {
       state.forecast.loading = true
       state.forecast.error = false
     })
-    reducersBulder.addCase(getForecastList.rejected, state => {
+    reducersBuilder.addCase(getForecastList.rejected, state => {
       state.forecast.loading = false
       state.forecast.error = true
     })
-    reducersBulder.addCase(getForecastList.fulfilled, (state, { payload }) => {
+    reducersBuilder.addCase(getForecastList.fulfilled, (state, { payload }) => {
       state.forecast.loading = false
       state.forecast.error = false
       state.forecast.data = createForecastList(payload) 

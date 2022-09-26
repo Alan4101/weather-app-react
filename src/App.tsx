@@ -6,10 +6,9 @@ import { getCurrentWeather } from "./store/reducers/weatherReducer"
 
 export const App: FC = () => {
   const dispatch = useAppDispatch()
-  const [kindWeather, setKindWeeather] = useState('')
-  const data = useAppSelector(
-    state => state.weathers.weatherData.data,
-  )
+  const [kindWeather, setKindWeeather] = useState("")
+  const data = useAppSelector(state => state.weathers.weatherData.data)
+  
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
@@ -23,22 +22,21 @@ export const App: FC = () => {
     }
     // eslint-disable-next-line
   }, [])
-useEffect(()=>{
-  if(data){
-    const kind = data.weather[0].main.toLowerCase();
 
-    setKindWeeather(kind)
-  }
-},[data])
-  console.log(kindWeather)
+  useEffect(() => {
+    if (data) {
+      const kind = data.weather[0].main.toLowerCase()
+      setKindWeeather(kind)
+    }
+  }, [data])
+
   return (
     <div className="App">
       <video className="video-bg" autoPlay muted loop>
-        {/* <source type="video/mp4" src="/cloudy.mp4" /> */}
-        <source type="video/mp4" src={`/${kindWeather}.mp4`} />
+        {kindWeather && <source type="video/mp4" src={`/${kindWeather}.mp4`} />}
       </video>
       <div className="mainWrapper">
-        <Layout/>
+        <Layout />
       </div>
     </div>
   )

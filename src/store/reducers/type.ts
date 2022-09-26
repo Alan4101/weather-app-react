@@ -76,3 +76,12 @@ export interface IForecastList {
 export type ForecastData ={
   [k: string]: Weather[];
 }
+type UnitsType = "standart" | "metric" | "imperial"
+export interface RequestWeather {
+  lat: number
+  lon: number
+  appid?: string | undefined
+  exclude?: string
+  units?: UnitsType
+  lang?: string
+}

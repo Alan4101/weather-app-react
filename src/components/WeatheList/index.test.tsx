@@ -20,6 +20,11 @@ describe("test weather list render", () => {
         error: false,
       },
     },
+    citiesWeather: {
+      loading: false,
+      error: false,
+      list: null
+    }
   }
   const mockStore = configureStore()
   let store = mockStore(initialState)
