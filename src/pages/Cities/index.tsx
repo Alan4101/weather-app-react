@@ -1,56 +1,52 @@
 import { FC, useCallback, useEffect, useState } from "react"
 import classes from "./index.module.scss"
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "./../../services/hooks/hooksStore"
-import {
-  cleanList,
-  getWeatherForOneCity,
-} from "./../../store/reducers/weatherCities"
+import { useAppDispatch, useAppSelector } from "./../../services/hooks/hooksStore"
+import { cleanList, getWeatherForOneCity } from "./../../store/reducers/weatherCities"
 import { CityCard } from "../../components/CityCard"
-import {
-  CleanCache,
-  getCitiesWeatherFromCache,
-} from "../../services/utils/utils"
+import { CleanCache, getCitiesWeatherFromCache } from "../../services/utils/utils"
 
 export const Cities: FC = () => {
-  const { list, loading, error } = useAppSelector(state => state.citiesWeather)
+  const { list } = useAppSelector(state => state.citiesWeather)
   const dispatch = useAppDispatch()
   const [city, setCity] = useState<string>("")
   const [cities, setCities] = useState([])
+  const [isMounted, setIsMounted] = useState(false)
 
   useEffect(() => {
-    getCitiesWeatherFromCache().then(res => {
+    getCitiesWeatherFromCache('cities-name', 'cities').then(res => {
       setCities(res)
-      // res.forEach((i:string) => {
-      //   dispatch(getWeatherForOneCity({ q: i }))
-      // })
-      console.log(res)
     })
   }, [])
 
-  // useEffect(() => {
-  //   if ( cities) {
-  //     cities.forEach(i => {
-  //       dispatch(getWeatherForOneCity({ q: i }))
-  //     })
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+  useEffect(() => {
+    const getAllWeather = () => {
+      cities.forEach(async i => {
+        await dispatch(getWeatherForOneCity({ q: i }))
+      })
+    }
+    if (!isMounted) {
+      if (cities.length > 0) {
+        getAllWeather()
+        setIsMounted(true)
+      }
+    }
+    return () => {
+      dispatch(cleanList())
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cities, isMounted])
 
   const addCity = useCallback(
     (cityName: string) => {
       if (cityName) {
-        console.log(cityName)
         dispatch(
           getWeatherForOneCity({
             q: cityName,
           }),
-        )
+        ).then(()=> setCity(''))
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [city],
   )
 
@@ -58,9 +54,7 @@ export const Cities: FC = () => {
     e.preventDefault()
 
     if (list?.length) {
-      const isExist = list.some(
-        ({ name }) => name.toLowerCase() !== city.toLowerCase(),
-      )
+      const isExist = list.some(({ name }) => name.toLowerCase() !== city.toLowerCase())
       isExist ? addCity(city) : console.log("City is exist in your list!")
     } else {
       addCity(city)
@@ -70,7 +64,7 @@ export const Cities: FC = () => {
   const handleCleanAllList = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     dispatch(cleanList())
-    CleanCache("CitiesWeather")
+    CleanCache("cities-name")
   }
 
   const handleDispatchCity = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,17 +75,11 @@ export const Cities: FC = () => {
     <div className={classes.citiesWrapper}>
       <div>
         <form>
-          <input
-            type="text"
-            value={city}
-            onChange={e => handleDispatchCity(e)}
-          />
+          <input type="text" value={city} onChange={e => handleDispatchCity(e)} />
           <button onClick={handlerAddCity}>Add city</button>
           <button onClick={handleCleanAllList}>Clean list</button>
         </form>
-        <div>
-          {list?.length && list.map((i, index )=> <CityCard key={index} {...i} />)}
-        </div>
+        <div>{list?.length && list.map((i, index) => <CityCard key={index} {...i} />)}</div>
       </div>
     </div>
   )

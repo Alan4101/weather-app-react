@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 import { http } from "../../services/httpClient/httpClient"
-import { AddToCacheData} from "../../services/utils/utils"
+import { AddToCacheData } from "../../services/utils/utils"
 import { IWeatherData, RequestWeather } from "./type"
 
 type Cities = IWeatherData
@@ -18,12 +18,15 @@ const initialState: CitiesList = {
 interface RequestCityWeather extends Partial<RequestWeather> {
   q: string
 }
+interface ResponceCityWeather extends IWeatherData{
+  status: boolean;
+}
 
 export const getWeatherForOneCity = createAsyncThunk(
   "citiesWeather/getWeatherForOneCity",
   async (option: RequestCityWeather, { rejectWithValue }) => {
     try {
-      const responce = await http.get<RequestCityWeather, Cities>({
+      const responce = await http.get<RequestCityWeather, ResponceCityWeather>({
         url: "weather?",
         param: {
           q: option.q,
@@ -31,7 +34,9 @@ export const getWeatherForOneCity = createAsyncThunk(
           units: "metric",
         },
       })
-
+      if(responce){
+        responce.status = true;
+      }
       return responce
     } catch (error: any) {
       return rejectWithValue(error.response.data.message)
@@ -56,19 +61,17 @@ const weatherCitiesReducer = createSlice({
       state.loading = false
       state.error = true
     })
-    reducersBuilder.addCase(
-      getWeatherForOneCity.fulfilled,
-      (state, { payload }) => {
-        state.error = false
-        state.loading = false
-        state.list = state.list?.length ? [...state.list, payload] : [payload]
-        const citiesNameList = state.list.length
-          ? [...state.list.slice().map(i => i.name), payload.name]
-          : [payload.name]
-          const uq = new Set(citiesNameList)
-        AddToCacheData("CitiesWeather", "cities", Array.from(uq).join(", "))
-      },
-    )
+    reducersBuilder.addCase(getWeatherForOneCity.fulfilled, (state, { payload }) => {
+      state.error = false
+      state.loading = false
+      state.list = state.list?.length ? [...state.list, payload] : [payload]
+
+      const citiesNameList = state.list.length
+        ? [...state.list.slice().map(i => i.name), payload.name]
+        : [payload.name]
+      const uq = new Set(citiesNameList)
+      AddToCacheData("cities-name", "cities", Array.from(uq).join(", "))
+    })
   },
 })
 export const { cleanList } = weatherCitiesReducer.actions

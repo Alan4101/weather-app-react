@@ -8,7 +8,7 @@ export const App: FC = () => {
   const dispatch = useAppDispatch()
   const [kindWeather, setKindWeeather] = useState("")
   const data = useAppSelector(state => state.weathers.weatherData.data)
-  
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
