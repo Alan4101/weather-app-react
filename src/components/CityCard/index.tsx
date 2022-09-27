@@ -1,13 +1,15 @@
 import { FC } from "react"
 import { IWeatherData } from './../../store/reducers/type';
+// import classes from "./index.module.scss"
 
-type CityCardProps = IWeatherData
 
-export const CityCard: FC<CityCardProps> = (props) => {
-const {name, weather, main} = props;  
+export const CityCard: FC<IWeatherData> = (props) => {
+const {name, weather, main} = props 
+// as Pick<Weather, keyof IWeatherData>
   return (
     <div>
       <h1>{name}</h1>
+      {/* <ForecastItem {...props as Weather}/> */}
       {weather.map(i=>(
         <p key={i.id}>{i.main}</p>
       ))}

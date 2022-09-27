@@ -77,7 +77,7 @@ export const WeatherList: FC = () => {
         </div>
         <div className={classes.itemContainer} data-testid="forecastDayList">
           {forecastDayList.length > 0
-            ? forecastDayList.map(w => <ForecastItem key={w.dt} weather={w}/>)
+            ? forecastDayList.map((w) => <ForecastItem key={w.dt} weather={w}/>)
             : null}
         </div>
       </div>

@@ -85,3 +85,4 @@ export interface RequestWeather {
   units?: UnitsType
   lang?: string
 }
+export type KnownTypeProps = Weather & IWeatherData

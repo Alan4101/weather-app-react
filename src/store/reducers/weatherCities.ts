@@ -8,7 +8,7 @@ type Cities = IWeatherData
 interface CitiesList {
   list: Cities[] | null
   loading: boolean
-  error: boolean
+  error: boolean | string
 }
 const initialState: CitiesList = {
   list: null,
@@ -57,9 +57,10 @@ const weatherCitiesReducer = createSlice({
       state.loading = true
       state.error = false
     })
-    reducersBuilder.addCase(getWeatherForOneCity.rejected, state => {
+    reducersBuilder.addCase(getWeatherForOneCity.rejected,(state, action)  => {
       state.loading = false
       state.error = true
+      // state.error = action.error
     })
     reducersBuilder.addCase(getWeatherForOneCity.fulfilled, (state, { payload }) => {
       state.error = false

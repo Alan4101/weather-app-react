@@ -1,3 +1,64 @@
+@import '../../styles/mixins';
+
 .citiesWrapper{
   z-index: 9;
+}
+.formContainer{
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  .inputText{
+    margin: 1em auto;
+    width: 500px;
+    padding: 1em;
+    border: none;
+    // border-bottom: 2px solid #6510c9;
+    border-bottom: 2px solid #fff;
+    background-color: transparent;
+    outline: none;
+    color: #fff;
+    font-size: 18px;
+    text-align: center;
+    &:active, &:focus{
+
+      border-bottom: 2px solid #2a0653;
+      transition: all .2ms linear;
+    }
+    &::placeholder{
+      color: #ccc;
+      font-style: italic;
+    }
+  }
+  .btnContainer{
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    .btn{
+      width: 150px;
+      padding-top: 1em;
+      padding: 1em 3em;
+      border-radius: 15px;
+      margin-top: 1em;
+      color: #fff;
+      background-color: #110b18;
+      border: none;
+      position: relative;
+      cursor: pointer;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      border-radius: 15px;
+      display: grid;
+      align-items: center;
+      outline: none;
+      .title {
+        text-transform: capitalize;
+        padding: 0;
+        z-index: 9;
+      }
+      &:hover > .title {
+        color: #ccc !important;
+      }
+      @include button-hover(#6510c9);
+    }
+  }
+ 
 }
